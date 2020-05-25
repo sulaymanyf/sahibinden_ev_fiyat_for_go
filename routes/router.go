@@ -12,4 +12,7 @@ func RegisterRoutes(router *gin.Engine) {
 	router.GET("/sahibinden", controllers.Sahibinden)
 	router.GET("/fiyatlar", controllers.GetPriceById)
 
+	router.GET("/youtubedownload", controllers.YoutubeDownLoad)
+	router.POST("/youtubedownload", controllers.YoutubeDownLoad)
+
 }

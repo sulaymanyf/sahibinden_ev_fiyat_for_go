@@ -6,8 +6,11 @@ import (
 	"../models"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	. "github.com/kkdai/youtube"
 	"log"
 	"net/http"
+	"os/user"
+	"path/filepath"
 )
 
 func IndexHome(ctx *gin.Context) {
@@ -85,4 +88,33 @@ func Sahibinden(ctx *gin.Context) {
 	//ctx.HTML(http.StatusOK, "index/index.html", gin.H{
 	//	"msg": "easy gin",
 	//})
+}
+
+func YoutubeDownLoad(ctx *gin.Context) {
+	log.Println(ctx.Request.Method == "GET")
+	if ctx.Request.Method == "GET" {
+		ctx.HTML(http.StatusOK, "index/youtube.html", gin.H{
+			"msg": "easy gin",
+		})
+		return
+	}
+	if ctx.Request.Method == "POST" {
+		url := ctx.Request.FormValue("url")
+		usr, _ := user.Current()
+		currentDir := fmt.Sprintf("%v/Movies/youtubedr", usr.HomeDir)
+		log.Println("download to dir=", currentDir)
+		y := NewYoutube(true)
+		log.Println("https://www.youtube.com/watch?v=zaakp81L9wU")
+		log.Println(url)
+		if err := y.DecodeURL(url); err != nil {
+			fmt.Println("err:", err)
+		}
+		if err := y.StartDownload(filepath.Join(currentDir, "dl.mp4")); err != nil {
+			fmt.Println("err:", err)
+		}
+		log.Println(y.StreamList)
+		ctx.HTML(http.StatusOK, "index/youtube.html", y.StreamList[0])
+
+	}
+
 }

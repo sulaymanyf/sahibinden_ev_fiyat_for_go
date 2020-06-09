@@ -65,18 +65,17 @@
         <label for="exampleInputName2">URL: </label>
         <input type="text" class="form-control" id="url" name="url" placeholder="url">
       </div>
-      <button type="submit" class="btn btn-default">DownLoad</button>
+      <button type="submit" class="btn btn-default">开始解析</button>
     </form>
         <div class="list-group">
-          <a href="#" class="list-group-item active">
-            下载连接
-          </a>
           {{if .}}
-
             {{range $i, $v :=. }}
-              <label for="exampleInputName2">{{$i}} </label>
-
-              <a href="{{$v}}" class="list-group-item">{{$v}}</a>
+                {{if eq $i "title"}}
+                  <label for="exampleInputName2">{{$v}}</label>
+                {{end}}
+                {{if eq $i "url" }}
+                 <a href="{{$v}}" class="list-group-item">DownLoad</a>
+              {{end}}
             {{end}}
           {{end}}
         </div>

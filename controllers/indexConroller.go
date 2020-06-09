@@ -10,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"os/user"
-	"path/filepath"
 )
 
 func IndexHome(ctx *gin.Context) {
@@ -91,6 +90,7 @@ func Sahibinden(ctx *gin.Context) {
 }
 
 func YoutubeDownLoad(ctx *gin.Context) {
+	log.Println(ctx.ClientIP())
 	log.Println(ctx.Request.Method == "GET")
 	if ctx.Request.Method == "GET" {
 		ctx.HTML(http.StatusOK, "index/youtube.html", gin.H{
@@ -109,12 +109,24 @@ func YoutubeDownLoad(ctx *gin.Context) {
 		if err := y.DecodeURL(url); err != nil {
 			fmt.Println("err:", err)
 		}
-		if err := y.StartDownload(filepath.Join(currentDir, "dl.mp4")); err != nil {
-			fmt.Println("err:", err)
-		}
 		log.Println(y.StreamList)
 		ctx.HTML(http.StatusOK, "index/youtube.html", y.StreamList[0])
 
 	}
+
+}
+
+func Kiralik(ctx *gin.Context) {
+
+	logic.Kiralik()
+
+}
+
+func Yeni(ctx *gin.Context) {
+
+	ids := logic.GetEvIds("kiralik")
+	evler := logic.GetEvinfo(ids)
+
+	ctx.HTML(http.StatusOK, "index/evler.html", evler)
 
 }

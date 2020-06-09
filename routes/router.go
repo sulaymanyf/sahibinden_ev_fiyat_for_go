@@ -6,6 +6,7 @@ import (
 )
 
 func RegisterRoutes(router *gin.Engine) {
+
 	router.GET("/", controllers.IndexHome)
 	router.GET("/index", controllers.IndexHome)
 
@@ -14,5 +15,8 @@ func RegisterRoutes(router *gin.Engine) {
 
 	router.GET("/youtubedownload", controllers.YoutubeDownLoad)
 	router.POST("/youtubedownload", controllers.YoutubeDownLoad)
+
+	router.GET("/kiralik", controllers.Kiralik)
+	router.GET("/yeni", controllers.Yeni)
 
 }

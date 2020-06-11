@@ -4,9 +4,11 @@ import (
 	"../drivers"
 	"../logic"
 	"../models"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	. "github.com/kkdai/youtube"
+	"html/template"
 	"log"
 	"net/http"
 	"os/user"
@@ -123,10 +125,12 @@ func Kiralik(ctx *gin.Context) {
 }
 
 func Yeni(ctx *gin.Context) {
-
+	evs := make([]models.Response, 0)
 	ids := logic.GetEvIds("kiralik")
 	evler := logic.GetEvinfo(ids)
-
-	ctx.HTML(http.StatusOK, "index/evler.html", evler)
+	marshal, _ := json.Marshal(evler)
+	json.Unmarshal(marshal, &evs)
+	log.Print(evs)
+	ctx.HTML(http.StatusOK, "index/evler.html", evs)
 
 }

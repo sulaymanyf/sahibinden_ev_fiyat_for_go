@@ -10,26 +10,30 @@
 
   </head>
   <body>
-
   <div class="container">
     <div class="row">
-    <div class="col-sm-6 col-md-4">
-  {{range .}}
+        {{range . }}
+          <div class="caption">
+            <h3>{{.ShortName}}</h3>
+            <h3>kira:  {{.Price}} &nbsp;<span>{{.Currency}}</span></h3>
+          </div>
+        {{end}}
+    </div>
 
-      <div class="thumbnail">
-{{/*        <img src="{{.Images.get(0).Normal}}" alt="...">*/}}
-        <div class="caption">
-          <h3>{{.shortName}}</h3>
-          <h3>{{.price}}</h3><span>{{.currency}}</span>
-         {{.description}}
-          <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-        </div>
-      </div>
-    {{end}}
+    <div class="row">
+        {{range . }}
+            {{range $v := .Images}}
+              <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail">
+                  <img src="{{ $v.X16 }}" alt="...">
+                </a>
+              </div>
+            {{end}}
+        {{end}}
     </div>
-    </div>
-    </div>
-    </body>
-    </html>
 
-  {{ end }}
+  </div>
+  </body>
+  </html>
+
+{{ end }}
